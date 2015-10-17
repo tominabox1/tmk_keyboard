@@ -1,44 +1,38 @@
 /*
-Copyright 2012 Jun Wako <wakojun@gmail.com>
-
+Copyright 2013 Mathias Andersson <wraul@dbox.se>
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 (at your option) any later version.
-
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
-
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include <avr/io.h>
-#include "stdint.h"
-#include "led.h"
-#include <action_layer.h>
+#include "backlight.h"
 
-
-void led_set(uint8_t usb_led)
+/* Backlight pin configuration
+ * F-row: High PB1
+ * W: Low PB4
+ * A: Low PB2
+ * S: Low PB3
+ * D: Low PD7
+ */
+void backlight_set(uint8_t level)
 {
-    if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
-        // output low
-        DDRB |= (1<<4);
-        PORTB &= ~(1<<4);
-    } else {
-        // Hi-Z
-        DDRB &= ~(1<<4);
-        PORTB &= ~(1<<4);
-    }
+    // Set as output.
+    DDRE |= (1<<6);
 
-    if (layer_state & ((1<<1) | (1<<2))) { // layer 1 or 2 is active
-        DDRB |= (1<<5);
-        PORTB &= ~(1<<5);
-    } else {
-        DDRB &= ~(1<<5);
-        PORTB &= ~(1<<5);
+    if(level & (1<<0))
+    {
+        PORTE &= ~(1<<6);
     }
-
+    else
+    {
+        PORTE |= (1<<6);
+    }
 }

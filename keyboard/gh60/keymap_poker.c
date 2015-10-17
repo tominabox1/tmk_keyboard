@@ -1,104 +1,118 @@
 #include "keymap_common.h"
+#include "backlight.h"
 
 const uint8_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
-    /* 0: qwerty */
-    KEYMAP_ANSI(
-        GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC, \
-        TAB, Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P,   LBRC,RBRC,BSLS, \
-        CAPS,A,   S,   D,   F,   G,   H,   J,   K,   L,   SCLN,QUOT,     ENT,  \
-        LSFT,Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,          RSFT, \
-        LCTL,LGUI,LALT,          SPC,                     FN0, RGUI,APP, RCTL),
-    /* 1: colemak */
-    KEYMAP_ANSI(
-        GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC, \
-        TAB, Q,   W,   F,   P,   G,   J,   L,   U,   Y,   SCLN,LBRC,RBRC,BSLS, \
-        BSPC,A,   R,   S,   T,   D,   H,   N,   E,   I,   O,   QUOT,     ENT,  \
-        LSFT,Z,   X,   C,   V,   B,   K,   M,   COMM,DOT, SLSH,          RSFT, \
-        LCTL,LGUI,LALT,          SPC,                     FN0, RGUI,APP, RCTL),
-    /* 2: dvorak */
-    KEYMAP_ANSI(
-        GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   LBRC,RBRC,BSPC, \
-        TAB, QUOT,COMM,DOT, P,   Y,   F,   G,   C,   R,   L,   SLSH,EQL, BSLS, \
-        CAPS,A,   O,   E,   U,   I,   D,   H,   T,   N,   S,   MINS,     ENT,  \
-        LSFT,SCLN,Q,   J,   K,   X,   B,   M,   W,   V,   Z,             RSFT, \
-        LCTL,LGUI,LALT,          SPC,                     FN0, RGUI,APP, RCTL),
-    /* 3: workman */
-    KEYMAP_ANSI(
-        GRV, 1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, BSPC, \
-        TAB, Q,   D,   R,   W,   B,   J,   F,   U,   P,   SCLN,LBRC,RBRC,BSLS, \
-        BSPC,A,   S,   H,   T,   G,   Y,   N,   E,   O,   I,   QUOT,     ENT,  \
-        LSFT,Z,   X,   M,   C,   V,   K,   L,   COMM,DOT, SLSH,          RSFT, \
-        LCTL,LGUI,LALT,          SPC,                     FN0, RGUI,APP, RCTL),
-    /* 4: Poker with Arrow */
-    KEYMAP_ANSI(
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          UP,   \
-        TRNS,TRNS,TRNS,          TRNS,                    TRNS,LEFT,DOWN,RGHT),
-    /* 5: Poker with Esc */
-    KEYMAP_ANSI(
-        ESC, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \
-        TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \
-        TRNS,TRNS,TRNS,          TRNS,                    TRNS,TRNS,TRNS,TRNS),
-    /* 6: Poker Fn
+
+    /* 0: colemak 
      * ,-----------------------------------------------------------.
-     * |Esc| F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|F11|F12|       |
+     * |Esc|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =| Caps  |
      * |-----------------------------------------------------------|
-     * |     |FnQ| Up|   |   |   |   |   |   |Cal|   |Hom|Ins|FnL  |
+     * |Tab  |  Q|  W|  F|  P|  G|  J|  L|  U|  Y|  ;|  [|  ]|    \|
      * |-----------------------------------------------------------|
-     * |      |Lef|Dow|Rig|   |   |Psc|Slk|Pau|   |Tsk|End|        |
+     * |Backsp|  A|  R|  S|  T|  D|  H|  N|  E|  I|  O|  '| Enter  |
      * |-----------------------------------------------------------|
-     * |        |Del|   |Web|Mut|VoU|VoD|   |PgU|PgD|Del|          |
+     * |Shift   |  Z|  X|  C|  V|  B|  K|  M|  ,|  .|  /|Shift     |
      * |-----------------------------------------------------------|
-     * |    |    |    |         FnS            |    |    |    |    |
+     * |Ctrl |Opt |Cmd  |       Space/Fn0        |Cmd   |Fn4 |Fn1  |
      * `-----------------------------------------------------------'
-     * Fn:  to Fn overlay
-     * FnL: to Layout selector overaly
-     * FnQ: toggle Esc overlay
-     * FnS: toggle Arrow overlay
      */
-    KEYMAP_ANSI(
-        ESC, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, F11, F12, TRNS, \
-        TRNS,FN2, UP,  TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,CALC,TRNS,HOME,INS, FN4,  \
-        TRNS,LEFT,DOWN,RGHT,TRNS,TRNS,PSCR,SLCK,PAUS,TRNS,FN3, END,      TRNS, \
-        TRNS,DEL, TRNS,WHOM,MUTE,VOLU,VOLD,TRNS,PGUP,PGDN,DEL,           TRNS, \
-        TRNS,TRNS,TRNS,          FN1,                     TRNS,TRNS,TRNS,TRNS),
-    /* 7: Layout selector
+    KEYMAP(ESC,  1,   2,   3,   4,   5,   6,   7,   8,   9,   0,   MINS,EQL, CAPS,      \
+           TAB,  Q,   W,   F,   P,   G,   J,   L,   U,   Y,   SCLN, LBRC,RBRC,BSLS,      \
+           BSPC, A,   R,   S,   T,   D,   H,   N,   E,   I,   O,QUOT,ENT,            \
+                      Z,   X,   C,   V,   B,   K,   M,   COMM,DOT, SLSH,RSFT,          \
+           LCTL, LSFT,LALT,LGUI,           FN0,                     RGUI,FN2,FN1),
+
+    /* 1: colemak 
      * ,-----------------------------------------------------------.
-     * | Lq| Lc| Ld| Lw|   |   |   |   |   |   |   |   |   |       |
+     * |`  | F1| F2| F3| F4| F5| F6| F7| F8| F9|F10|  -|  =| Caps  |
      * |-----------------------------------------------------------|
-     * |     |Lq |Lw |   |   |   |   |   |   |   |   |   |   |     |
+     * |Tab  |   |   |   |    |   |   |PgUp|Up|PgDn|  |  |   |     |
      * |-----------------------------------------------------------|
-     * |      |   |   |Ld |   |   |   |   |   |   |   |   |        |
+     * |Del   |    |   |    |   |   |   |Left|Down|Right|  |  |    |
      * |-----------------------------------------------------------|
-     * |        |   |   |Lc |   |   |   |   |   |   |   |          |
+     * |Shift   |   |   |   |   |   |   |   |   |   |   |          |
      * |-----------------------------------------------------------|
-     * |    |    |    |                        |    |    |    |    |
+     * |Ctrl |Opt |Cmd  |       Space/Fn0        |Cmd   |Fn4 |Fn1  |
      * `-----------------------------------------------------------'
-     * Lq: set Qwerty layout
-     * Lc: set Colemak layout
-     * Ld: set Dvorak layout
-     * Lw: set Workman layout
      */
-    KEYMAP_ANSI(
-        FN5, FN6, FN7, FN8, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,FN5, FN8, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS, \
-        TRNS,TRNS,TRNS,FN7, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,     TRNS, \
-        TRNS,TRNS,TRNS,FN6, TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,TRNS,          TRNS, \
-        TRNS,TRNS,TRNS,          TRNS,                    TRNS,TRNS,TRNS,TRNS),
+    KEYMAP(GRV, F1,  F2,  F3,  F4,  F5,  F6,  F7,  F8,  F9,  F10, MINS,EQL, CAPS,      \
+           TAB,  NO,  NO,   NO,   FN3,   NO,  NO, PGUP,  UP,PGDN,    NO,NO,NO,NO,      \
+           DEL, NO,   NO,   NO,   NO,   NO,   NO, LEFT,DOWN,RGHT, NO,NO,      NO,            \
+                      NO,   NO,   NO,   NO,   NO,   NO,   NO,   NO,NO, NO,NO,          \
+           LCTL, LSFT,LALT,LGUI,           FN0,                     FN4,FN2,FN1),
+
+    /* 2: Gaming/QWERTY
+     * ,-----------------------------------------------------------.
+     * |Esc|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =| Caps  |
+     * |-----------------------------------------------------------|
+     * |Tab  |  Q|  W|  E|  R|  T|  Y|  U|  I|  O|  P|  [|  ]|   \ |
+     * |-----------------------------------------------------------|
+     * |Backsp|  A|  S|  D|  F|  G|  H|  J|  K|  L|  ;|  '| Enter  |
+     * |-----------------------------------------------------------|
+     * |Shift   |  Z|  X|  C|  V|  B|  N|  M|  ,|  .|  /|Shift     |     
+     * |-----------------------------------------------------------|
+     * |Ctrl |Opt |Cmd  |       Space            |Cmd   |Opt |Fn1  |
+     * `-----------------------------------------------------------'
+     */
+    KEYMAP(ESC,  1,   2,   3,   4,   5,   6,   7,   8,   9,   0, MINS,EQL, CAPS,      \
+           TAB,  Q,   W,   E,   R,   T,   Y,   U,   I,   O,   P, LBRC,RBRC,BSLS,      \
+           BSPC, A,   S,   D,   F,  G,   H,   J,   K,   L,   SCLN,QUOT,ENT,            \
+                      Z,   X,   C,   V,   B,   N,   M,   COMM,DOT, SLSH,RSFT,          \
+           LCTL, LSFT,LALT,LGUI,           SPC,                     RGUI,RALT,FN1),
+
+    /* 3: Numpad
+     * ,-----------------------------------------------------------.
+     * |Esc|  1|  2|  3|  4|  5|  6|  7|  8|  9|  0|  -|  =| Caps  |
+     * |-----------------------------------------------------------|
+     * |Tab  |   |   |   |   |   |   |   7|  8|  9|  +|   |  |   \ |
+     * |-----------------------------------------------------------|
+     * |Backsp|   |   |   |   |   |   |  4|  5|  6|  +|  '| Enter  |
+     * |-----------------------------------------------------------|
+     * |Shift   |   |   |   |   |   |   |  1|  2|  3|  /|Shift     |     
+     * |-----------------------------------------------------------|
+     * |Ctrl |Opt |Cmd  |          0             |.     |Opt |Fn1  |
+     * `-----------------------------------------------------------'
+     */
+    KEYMAP(ESC,  1,   2,   3,   4,   5,   6,   7,   8,   9,   0, MINS,EQL, CAPS,      \
+           TAB,  NO,   NO,  NO,  NO,   NO,   NO,   7,   8,   9,   PMNS, LBRC,RBRC,BSLS,      \
+           BSPC, NO,   NO,   NO,   NO,  NO,   NO,   4,   5,   6,   PPLS,QUOT,ENT,            \
+                      NO,   NO,   NO,   NO,   NO,   NO,   1,   2,3, SLSH,RSFT,          \
+           LCTL, LSFT,LALT,LGUI,           FN6,                     DOT,FN2,FN1),
+
 };
+
+enum macro_id {
+    AIDS,
+    PRISM,
+};
+
+
 const uint16_t PROGMEM fn_actions[] = {
-    /* Poker Layout */
-    [0] = ACTION_LAYER_MOMENTARY(6),  // to Fn overlay
-    [1] = ACTION_LAYER_TOGGLE(4),     // toggle arrow overlay
-    [2] = ACTION_LAYER_TOGGLE(5),     // toggle Esc overlay
-    [3] = ACTION_MODS_KEY(MOD_RCTL|MOD_RSFT, KC_ESC), // Task(RControl,RShift+Esc)
-    [4] = ACTION_LAYER_MOMENTARY(7),  // to Layout selector
-    [5] = ACTION_DEFAULT_LAYER_SET(0),  // set qwerty layout
-    [6] = ACTION_DEFAULT_LAYER_SET(1),  // set colemak layout
-    [7] = ACTION_DEFAULT_LAYER_SET(2),  // set dvorak layout
-    [8] = ACTION_DEFAULT_LAYER_SET(3),  // set workman layout
+    [0] = ACTION_LAYER_TAP_KEY(1, KC_SPC),              // FN0
+    [1] = ACTION_LAYER_MOMENTARY(2),                    // Activates directional layer
+    [2] = ACTION_LAYER_TOGGLE(3),			   // Activates numpad layer
+    [3] = ACTION_LAYER_MOMENTARY(1),			   // Same as FN0 but does not send space on tap
+    [4] = ACTION_BACKLIGHT_STEP(),			   // FN5 toggles backlight
+    [5] = ACTION_LAYER_TOGGLE(0),			   // Toggles back to Default Layer 0
+    [6] = ACTION_LAYER_TAP_KEY(1, KC_0),                // FN0 or 0
+};
+
+
+const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt)
+{
+    keyevent_t event = record->event;
+    //uint8_t tap_count = record->tap_count;
+
+    switch (id) {
+        case AIDS:
+            return (event.pressed ?
+                   MACRO(T(A), T(I), T(D), T(S), END ) :
+                    MACRO( END ) );
+      case PRISM:
+            return (event.pressed ?
+                   MACRO(T(SLSH), T(P), T(R), T(I), T(S), T(M), T(SPC), END ) :
+                    MACRO( END ) );
+     
+    }
+    return MACRO_NONE;
 };
