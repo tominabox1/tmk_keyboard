@@ -33,7 +33,7 @@ void led_set(uint8_t usb_led)
         PORTB &= ~(1<<4);
     }
 
-    if (layer_state & ((1<<1) | (1<<2))) { // layer 1 or 2 is active
+    if (layer_state & ((1<<1) | (1<<2) | 1<<3)) { // layer 1 or 2 is active
         DDRB |= (1<<5);
         PORTB &= ~(1<<5);
     } else {
